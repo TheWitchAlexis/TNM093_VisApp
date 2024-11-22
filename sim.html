@@ -4,17 +4,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Visual Applications - Lab 1</title>
-    <script src="https://cdn.jsdelivr.net/npm/d3@7.6.1/dist/d3.min.js"></script>
+    <title>TNM093 Visual Applications Lab</title>
 </head>
 
 <body>
-    <h1>Visual Applications - Lab 1</h1>
+    <h1>TNM093 Visual Applications Lab</h1>
     <h2>Parameters</h2>
     <div>
         <h3>Mass</h3>
-        <label for="mass_number">Number of masses:</label>
-        <select id="mass_number" value0="2">
+        <label for="meshResolution">Number of masses:</label>
+        <select id="meshResolution" value0="2">
             <option value="2">2</option>
             <option value="4">4</option>
             <option value="9">9</option>
@@ -28,11 +27,12 @@
         <input type="range" id="mass" min="0" max="1" value="0.2" step="0.1"
             oninput="this.nextElementSibling.value = this.value">
         <output>0.2</output>
-        <h3>Structural Spring</h3>
         <label for="lengt_struct">Length at rest (m):</label>
-        <input type="range" id="lengt_struct" min="1" max="5" value="1" step="1"
+        <input type="range" id="lengt_struct" min="1" max="4" value="1" step="0.5"
             oninput="this.nextElementSibling.value = this.value">
         <output>1</output>
+
+        <h3>Structural Spring</h3>
         <label for="Stiff_K_Struc">Stiffness coefficient (kg s^−2):</label>
         <input type="range" id="Stiff_K_Struc" min="0" max="100" value="20" step="10"
             oninput="this.nextElementSibling.value = this.value">
@@ -41,11 +41,12 @@
         <input type="range" id="Damp_K_Struc" min="0" max="4" value="0.1" step="0.1"
             oninput="this.nextElementSibling.value = this.value">
         <output>1</output>
+
         <h3>Shear Spring</h3>
         <label for="Stiff_K_Shear">Stiffness coefficient (kg s^−2):</label>
-        <input type="range" id="Stiff_K_Shear" min="0" max="100" value="20" step="10"
+        <input type="range" id="Stiff_K_Shear" min="0" max="10" value="7" step="1"
             oninput="this.nextElementSibling.value = this.value">
-        <output>20</output>
+        <output>7</output>
         <label for="Damp_K_Shear">Damping coefficient (kg s^−1):</label>
         <input type="range" id="Damp_K_Shear" min="0" max="0.4" value="0.05" step="0.05"
             oninput="this.nextElementSibling.value = this.value">
@@ -53,12 +54,31 @@
 
         <h3>Simulation</h3>
         <label for="dt">Time Step (dt):</label>
-        <input type="range" id="dt" min="0.000" max="0.05" value="0.1" step="0.005"
+        <input type="range" id="dt" min="0.000" max="0.05" value="0.01" step="0.005"
             oninput="this.nextElementSibling.value = this.value">
-        <output>0.1</output>
+        <output>0.01</output>
+
+        <label for="methodSlider">Method:</label>
+        <span>Euler</span>
+        <input type="range" id="methodSlider" min="0" max="1" value="0" step="1">
+        <span>Verlet</span>
+
+        <label for="GravitySwitch">Gravity:</label>
+        <input type="checkbox" id="GravitySwitch">
+        <label for="windSwitch">Wind:</label>
+        <input type="checkbox" id="windSwitch">
+
+
     </div>
     <button id="startSimulation">Start Simulation</button>
+    <button id="stopSimulation">Stop Simulation</button>
     <div id="simulationOutput"></div>
+
+    <!-- Load D3.js version 4 -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <script src="https://d3js.org/colorbrewer.v1.min.js"></script>
+
+    <!-- Load js files-->
     <script src="methods.js"></script>
 </body>
 

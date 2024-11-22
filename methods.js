@@ -5,36 +5,42 @@ const svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-// Function to get user inputs
+// Function to get parameters
 function getUserInputs() {
-    const mass1 = {
-        mass: parseFloat(document.getElementById('mass1').value),
-        x: parseFloat(document.getElementById('mass1X').value),
-        y: parseFloat(document.getElementById('mass1Y').value),
-        vx: parseFloat(document.getElementById('mass1VX').value),
-        vy: parseFloat(document.getElementById('mass1VY').value),
-        radius: 10,
-        color: 'blue'
+    let meshResolution = document.getElementById('meshResolution').value;
+    let mass = parseFloat(document.getElementById('mass').value);
+        
+    let strucSpring = {
+        Stiff_K: document.getElementById('Stiff_K_Struc').value,
+        Damp_K: parseFloat(document.getElementById('Damp_K_Struc').value),
+        lengt: parseFloat(document.getElementById('lengt_struct').value),
     };
-    const mass2 = {
-        mass: parseFloat(document.getElementById('mass2').value),
-        x: parseFloat(document.getElementById('mass2X').value),
-        y: parseFloat(document.getElementById('mass2Y').value),
-        vx: parseFloat(document.getElementById('mass2VX').value),
-        vy: parseFloat(document.getElementById('mass2VY').value),
-        radius: 10,
-        color: 'blue'
+    let shearSpring = {
+        Stiff_K: document.getElementById('Stiff_K_Shear').value,
+        Damp_K: parseFloat(document.getElementById('Damp_K_Shear').value),
+        lengt: sqrt(2*(parseFloat(document.getElementById('lengt_struct').value))),
     };
-    const spring = {
-        k: parseFloat(document.getElementById('springK').value),
-        length: parseFloat(document.getElementById('springLength').value)
+    let simParameters = {
+        method: document.getElementById('methodSlider').value,
+        dt: parseFloat(document.getElementById('dt').value),
+        gravity: bool(document.getElementById('GravitySwitch').value),
+        wind: bool(document.getElementById('windSwitch').value),
     };
-    const damper = {
-        c: parseFloat(document.getElementById('damperC').value)
-    };
-    const dt = parseFloat(document.getElementById('dt').value);
 
-    return { mass1, mass2, spring, damper, dt };
+    let dots = { 
+        x,
+        y,
+        vx,
+        vy,
+        ax,
+        ay,
+        fx,
+        fy,
+        radius: 10,
+        color: 'green' //make it so that this color changes from green to red depending on the force
+    };
+
+    return {meshResolution, mass, strucSpring, shearSpring, simParameters, dots,};
 }
 
 // Euler method for numerical approximation
@@ -103,8 +109,13 @@ function startSimulation() {
     d3.interval(() => update(mass1, mass2, spring, damper, dt, mass1Circle, mass2Circle, springLine), dt * 1000);
 }
 
-// Attach the startSimulation function to the button click event
-document.getElementById("startSimulation").addEventListener("click", function() {
+// Évent listeners
+document.getElementById("startSimulation").addEventListener("click", function () {
     console.log("startSimulation clicked");
     startSimulation();
 });
+document.getElementById("stopSimulation").addEventListener("click", function () {
+    console.log("stopSimulation clicked");
+});
+
+// https://ics.uci.edu/~shz/courses/cs114/docs/proj3/index.html
